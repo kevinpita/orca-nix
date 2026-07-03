@@ -59,6 +59,19 @@ jobs:
             echo "update_needed=false" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Enable AppImage sandbox support
+        if: steps.check.outputs.update_needed == 'true'
+        run: |
+          # Nix's AppImage wrapper uses bubblewrap. Ubuntu runners may restrict
+          # unprivileged user namespaces, which makes the Orca CLI smoke test
+          # fail with: bwrap: setting up uid map: Permission denied.
+          if sysctl kernel.unprivileged_userns_clone >/dev/null 2>&1; then
+            sudo sysctl -w kernel.unprivileged_userns_clone=1
+          fi
+          if sysctl kernel.apparmor_restrict_unprivileged_userns >/dev/null 2>&1; then
+            sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+          fi
+
       - name: Update version
         if: steps.check.outputs.update_needed == 'true'
         env:
