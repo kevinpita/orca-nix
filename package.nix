@@ -9,16 +9,16 @@
 
 let
   pname = "orca";
-  version = "1.4.174";
+  version = "1.4.175";
 
   sources = {
     x86_64-linux = {
       url = "https://github.com/stablyai/orca/releases/download/v${version}/orca-linux.AppImage";
-      hash = "sha512-FVLVndzLazHhviwJNgNns47hDcigiNYMLfYtFvu2sTW5g4+ngrPFHQUcU89GRTet9JlE3y3+p1KOwcmA5gedNQ==";
+      hash = "sha512-J4wS07Zd7H+asrM6PTqORTfMKo+qs7MnZym4zaeJI3FSCHix+pQNPjbFVk1HST3w5MyApycsKaquKyMLuhF2Ig==";
     };
     aarch64-linux = {
       url = "https://github.com/stablyai/orca/releases/download/v${version}/orca-linux-arm64.AppImage";
-      hash = "sha512-mjD1jEqTbfPWGnyUp5s7yGDsYdnQPW7cfEdJEe4ll23vLlgKQwjtAI53/pgvkFnOi6bFmoKBYcfvNuOXiTGfng==";
+      hash = "sha512-oHh+7Lxhfls0v9QQ87zW83wTVD9IClVlS9ZrBL/MeY5gXu/Tt7nCG6cST1y/9CNJAvwcoZpS2nRX/0Z1uo1K0g==";
     };
   };
 
