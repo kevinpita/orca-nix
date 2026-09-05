@@ -9,16 +9,16 @@
 
 let
   pname = "orca";
-  version = "1.4.196";
+  version = "1.4.197";
 
   sources = {
     x86_64-linux = {
       url = "https://github.com/stablyai/orca/releases/download/v${version}/orca-linux.AppImage";
-      hash = "sha512-PJkGfenrKCLdZ1a6kAX8fDqMUY2Q2az6F3uJ34mDuheoK4DKAK/wuOZFoVwFIGebOGVDZ3E/6DTtU7GQxMZ+uw==";
+      hash = "sha512-CERjOYc6Wz+UnvUlqHCAKRH9C6GhhA0icslAHyKsf/8dAX2VC08di0WCrc/4EjcIMjhxq2Mm72GxOrX8/mCsnA==";
     };
     aarch64-linux = {
       url = "https://github.com/stablyai/orca/releases/download/v${version}/orca-linux-arm64.AppImage";
-      hash = "sha512-S2k8kFWNPMUbARg1yaW9jMhe8ceYTvcXARBP/GNaawrI6rjKR6moYAHIeVp9R8S5tPJGBVo5KkPTej122H2Nrw==";
+      hash = "sha512-Zl5GxoRJfwPP1huAQB7nmaX8NMNqdKORicqk45K4aOBpJ541pBSDbfqenBEjdMvdRU/HLSPs6HjWQ6Qb+Kzv6w==";
     };
   };
 
@@ -47,7 +47,7 @@ let
       install -m 444 -D ${appimageContents}/orca-ide.desktop $out/share/applications/orca-ide.desktop
       install -m 444 -D ${appimageContents}/orca-ide.png $out/share/icons/hicolor/512x512/apps/orca-ide.png
       substituteInPlace $out/share/applications/orca-ide.desktop \
-        --replace-fail 'Exec=AppRun --no-sandbox %U' 'Exec=orca-ide --no-sandbox %U'
+        --replace-fail 'Exec=AppRun ' 'Exec=orca-ide '
 
       wrapProgram $out/bin/orca-ide \
         --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true}}"
