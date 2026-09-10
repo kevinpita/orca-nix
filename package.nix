@@ -4,6 +4,7 @@
 , appimageTools
 , symlinkJoin
 , makeWrapper
+, withGui ? true
 ,
 }:
 
@@ -56,18 +57,16 @@ let
 
   cli = appimageTools.wrapAppImage {
     pname = "orca";
-    inherit version extraPkgs;
+    inherit version;
+    extraPkgs = pkgs: extraPkgs pkgs ++ [ pkgs.xorg-server ];
     src = appimageContents;
     runScript = "${appimageContents}/resources/bin/orca-ide";
   };
 in
 symlinkJoin {
-  name = "${pname}-${version}";
+  name = "${pname}${lib.optionalString (!withGui) "-cli"}-${version}";
 
-  paths = [
-    cli
-    gui
-  ];
+  paths = [ cli ] ++ lib.optional withGui gui;
 
   passthru = {
     inherit src appimageContents;

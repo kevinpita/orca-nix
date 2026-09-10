@@ -14,7 +14,7 @@
   };
 
   outputs =
-    { nixpkgs, flake-utils, ... }:
+    { self, nixpkgs, flake-utils, ... }:
     let
       supportedSystems = [
         "x86_64-linux"
@@ -38,6 +38,7 @@
           packages = {
             default = pkgs.orca;
             orca = pkgs.orca;
+            orca-cli = pkgs.orca.override { withGui = false; };
           };
 
           apps = {
@@ -69,5 +70,7 @@
       )
     // {
       overlays.default = overlay;
+      nixosModules.default = import ./modules/nixos.nix self;
+      homeModules.default = import ./modules/home-manager.nix self;
     };
 }
