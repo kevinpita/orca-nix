@@ -2,6 +2,7 @@
 , stdenv
 , fetchurl
 , appimageTools
+, buildFHSEnv
 , symlinkJoin
 , makeWrapper
 , withGui ? true
@@ -55,11 +56,41 @@ let
     '';
   };
 
-  cli = appimageTools.wrapAppImage {
+  # The generic AppImage FHS environment pulls in a desktop-sized set of unrelated
+  # libraries. Keep the Electron runtime, but include only its Linux dependencies.
+  cli = buildFHSEnv {
     pname = "orca";
     inherit version;
-    extraPkgs = pkgs: extraPkgs pkgs ++ [ pkgs.xorg-server ];
-    src = appimageContents;
+    targetPkgs = pkgs: [ pkgs.gitMinimal pkgs.openssh pkgs.xorg-server ];
+    multiPkgs = pkgs: with pkgs; [
+      glib
+      nspr
+      nss
+      atk
+      at-spi2-atk
+      at-spi2-core
+      cups
+      dbus
+      cairo
+      gtk3
+      pango
+      libx11
+      libxcomposite
+      libxdamage
+      libxext
+      libxfixes
+      libxrandr
+      libxtst
+      libgbm
+      libdrm
+      expat
+      libxcb
+      libxkbcommon
+      udev
+      alsa-lib
+      fontconfig
+      libGL
+    ];
     runScript = "${appimageContents}/resources/bin/orca-ide";
   };
 in

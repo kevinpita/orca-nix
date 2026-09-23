@@ -48,7 +48,7 @@ cachix use kevinpita
 
 Add `github:kevinpita/orca-nix` as an input. Use the modules below, or add `orca-nix.packages.${system}.default` to your package list.
 
-The `default` and `orca` outputs include both commands. `orca-cli` includes only the CLI launcher and its headless requirements. All outputs use the same AppImage. The CLI still needs Electron libraries.
+The `default` and `orca` outputs include both commands. `orca-cli` includes only the CLI launcher and its headless requirements. All outputs use the same AppImage. The CLI still needs Electron and Xvfb. Unlike the desktop output, the headless output uses a minimal FHS library set instead of Nixpkgs' general-purpose AppImage dependency set. The server still ships the Electron executable and bundled web client. It is not a standalone Node server. On x86_64-linux with the pinned Nixpkgs revision, the headless closure is about 1.2 GiB, down from 2.0 GiB with the generic AppImage wrapper. The additional disk use on your system depends on which dependencies it already has.
 
 ## NixOS
 
